@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Jquery Tutorial!</title>
+	<script src="jquery.js"></script>
+	<style>
+
+		#slider {
+			width: 720px;
+			height: 400px;
+			overflow: hidden;
+		}
+
+		#slider .slides {
+			display: flex;
+			width: 600px;
+			height: 400px;
+			margin: 0;
+			padding: 0;
+		}
+
+		#slider .slide {
+			float: left;
+			list-style-type: none;
+			width: 720px;
+			height: 400px;
+		}
+
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		<div class="header">
+			<h2>Welcome To Jquery Image Slider!</h2>
+		</div>
+
+		<div id="slider">
+			<ul class="slides">
+				<li class="slide"><img src="bird.jpg" alt=""></li>
+				<li class="slide"><img src="doggy.jpg" alt=""></li>
+				<li class="slide"><img src="globe.jpg" alt=""></li>
+				<li class="slide"><img src="leaf.jpg" alt=""></li>
+				<li class="slide"><img src="tiger.jpg" alt=""></li>
+				<li class="slide"><img src="wave.jpg" alt=""></li>
+			</ul>
+		</div>
+	</div>
+
+	<script>
+		$(function() {
+			//configuration
+			var width = 720;
+			var animationSpeed = 1000;
+			var pause = 3000;
+			var currentSlide = 1;
+
+			//cache DOM
+			var $slider = $('#slider');
+			var $slideContainer = $slider.find('.slides');
+			var $slides = $slideContainer.find('.slide');
+			var interval;
+
+			function startSlider() {
+				interval = setInterval(function() {
+					$slideContainer.animate({'margin-left': '-=' +width}, animationSpeed, function() {
+						currentSlide++;
+						if(currentSlide === $slides.length) {
+							currentSlide = 1;
+							$slideContainer.css('margin-left', 0);
+						}
+					});
+				}, pause);
+			}
+
+			function pauseSlider() {
+				clearInterval(interval);
+			}
+
+			$slider.on('mouseenter', pauseSlider).on('mouseleave', startSlider);
+
+			startSlider();
+		});		
+	</script>
+</body>
+</html>
